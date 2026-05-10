@@ -1,16 +1,553 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-
-<!--ico图标-->
-  <link rel="shortcut icon" type="image/x-icon" sizes="16x16" href="https://about.bingbook.cn/favicon16x16.ico">
-  <link rel="shortcut icon" type="image/x-icon" sizes="32x32" href="https://about.bingbook.cn/favicon32x32.ico">
-  <link rel="shortcut icon" type="image/x-icon" sizes="48x48" href="https://about.bingbook.cn/favicon48x48.ico">
-  
     <meta charset="UTF-8">
-    <title>        </title>
-    <meta http-equiv="refresh" content="0;url=https://bingbook.cn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>terasu.cn - 精品域名出售</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card-bg: #12121a;
+            --card-border: #1e1e2e;
+            --gold: #d4a853;
+            --gold-light: #e8c97a;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --accent: #6c5ce7;
+            --accent-glow: rgba(108, 92, 231, 0.4);
+            --tag-bg: #1a1a28;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ---- 背景粒子动画 ---- */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.15;
+            animation: floatUp 8s infinite ease-in;
+        }
+        .particle:nth-child(odd) {
+            background: var(--gold);
+            opacity: 0.1;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ---- 背景光晕 ---- */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bg-orb.orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-glow);
+            top: -15%;
+            left: -10%;
+            animation: orbDrift 12s ease-in-out infinite alternate;
+        }
+        .bg-orb.orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(212, 168, 83, 0.25);
+            bottom: -12%;
+            right: -8%;
+            animation: orbDrift 15s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes orbDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(60px, -40px) scale(1.25);
+            }
+        }
+
+        /* ---- 主容器 ---- */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 720px;
+            padding: 20px;
+        }
+
+        /* ---- 卡片 ---- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 50px 40px 44px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+                0 1px 0 rgba(255, 255, 255, 0.04) inset;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 36px 72px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+                0 0 80px rgba(108, 92, 231, 0.1);
+        }
+
+        /* 顶部微光条 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(212, 168, 83, 0.6),
+                    rgba(255, 255, 255, 0.5),
+                    rgba(212, 168, 83, 0.6),
+                    transparent);
+        }
+
+        /* ---- 徽章 ---- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--tag-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+        .badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 10px #4ade80;
+            animation: pulseDot 2s infinite;
+        }
+        @keyframes pulseDot {
+            0%,
+            100% {
+                box-shadow: 0 0 6px #4ade80;
+            }
+            50% {
+                box-shadow: 0 0 18px #4ade80, 0 0 30px rgba(74, 222, 128, 0.5);
+            }
+        }
+
+        /* ---- 域名展示 ---- */
+        .domain-display {
+            margin-bottom: 10px;
+        }
+        .domain-name {
+            font-size: clamp(2.6rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #d0d0e0 40%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            display: inline-block;
+        }
+        .domain-name:hover {
+            filter: brightness(1.2);
+            transform: scale(1.03);
+        }
+        .domain-tld {
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* ---- 标语 ---- */
+        .tagline {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            letter-spacing: 0.3px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        .tagline em {
+            font-style: normal;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ---- 特点标签 ---- */
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+        .feature-tag {
+            background: var(--tag-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #c8c8d8;
+            transition: all 0.3s ease;
+            cursor: default;
+            white-space: nowrap;
+        }
+        .feature-tag:hover {
+            border-color: var(--gold);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.2);
+            transform: translateY(-2px);
+        }
+        .feature-tag .icon {
+            margin-right: 6px;
+        }
+
+        /* ---- 分割线 ---- */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        /* ---- 联系区域 ---- */
+        .contact-section {
+            background: var(--tag-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .contact-section:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(212, 168, 83, 0.2);
+            transform: translateY(-2px);
+        }
+        .wechat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #07c160;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(7, 193, 96, 0.35);
+        }
+        .contact-info {
+            text-align: left;
+        }
+        .contact-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        .contact-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .contact-hint {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ---- 底部 ---- */
+        .footer-note {
+            margin-top: 28px;
+            font-size: 0.8rem;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        /* ---- 响应式 ---- */
+        @media (max-width: 600px) {
+            .card {
+                padding: 36px 20px 32px;
+                border-radius: 18px;
+            }
+            .feature-tags {
+                gap: 8px;
+            }
+            .feature-tag {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+            .contact-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                gap: 10px;
+            }
+            .contact-info {
+                text-align: center;
+            }
+            .domain-name {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- 背景光晕 -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <!-- 粒子容器 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <div class="card">
+
+            <!-- 状态徽章 -->
+            <div class="badge">
+                <span class="dot"></span> 待售中 · 可立即过户
+            </div>
+
+            <!-- 域名 -->
+            <div class="domain-display">
+                <span class="domain-name">terasu<span class="domain-tld">.cn</span></span>
+            </div>
+
+            <!-- 标语 -->
+            <p class="tagline">
+                简短易记 · 品牌感十足 · <em>适合科技 / 文创 / 设计类项目</em>
+            </p>
+
+            <!-- 特点标签 -->
+            <div class="feature-tags">
+                <span class="feature-tag"><span class="icon">✨</span> 6字母短域名</span>
+                <span class="feature-tag"><span class="icon">🔒</span> 无不良历史</span>
+                <span class="feature-tag"><span class="icon">🇨🇳</span> .cn 国别域名</span>
+                <span class="feature-tag"><span class="icon">🚀</span> 即买即用</span>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="divider"></div>
+
+            <!-- 联系方式 -->
+            <a class="contact-section" href="javascript:void(0)" onclick="copyWechat()" title="点击复制微信号">
+                <div class="wechat-icon">
+                    💬
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label">微信联系</div>
+                    <div class="contact-value">ProfLong</div>
+                    <div class="contact-hint">👆 点击复制微信号</div>
+                </div>
+            </a>
+
+            <!-- 底部提示 -->
+            <p class="footer-note">
+                诚心出售 · 价格可议 · 欢迎咨询
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ---- 生成背景粒子 ----
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 35;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 6 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 6) + 's';
+            particle.style.animationDelay = (Math.random() * 8) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // ---- 复制微信号 ----
+        function copyWechat() {
+            const wechatId = 'ProfLong';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(wechatId).then(() => {
+                    showToast('✅ 已复制微信号：' + wechatId);
+                }).catch(() => {
+                    fallbackCopy(wechatId);
+                });
+            } else {
+                fallbackCopy(wechatId);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('✅ 已复制微信号：' + text);
+            } catch (e) {
+                showToast('⚠️ 请手动复制微信号：' + text);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(message) {
+            // 移除已有 toast
+            const existing = document.querySelector('.toast-msg');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.textContent = message;
+            toast.style.cssText = `
+                        position: fixed;
+                        bottom: 40px;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(0);
+                        background: #1e1e2e;
+                        color: #fff;
+                        padding: 14px 28px;
+                        border-radius: 50px;
+                        font-size: 0.95rem;
+                        font-weight: 600;
+                        letter-spacing: 0.5px;
+                        z-index: 9999;
+                        border: 1px solid #3a3a50;
+                        box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+                        animation: toastIn 0.4s ease-out, toastOut 0.4s 1.8s ease-in forwards;
+                        pointer-events: none;
+                        white-space: nowrap;
+                    `;
+            document.body.appendChild(toast);
+
+            // 添加动画样式（如果不存在）
+            if (!document.getElementById('toast-style')) {
+                const styleEl = document.createElement('style');
+                styleEl.id = 'toast-style';
+                styleEl.textContent = `
+                            @keyframes toastIn {
+                                from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+                                to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+                            }
+                            @keyframes toastOut {
+                                from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                                to   { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                            }
+                        `;
+                document.head.appendChild(styleEl);
+            }
+
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, 2300);
+        }
+
+        // ---- 点击卡片任意空白处也有微妙反馈 ----
+        document.querySelector('.card').addEventListener('click', function(e) {
+            // 如果点击的是联系区域，不重复触发
+            if (e.target.closest('.contact-section')) return;
+            // 创建波纹
+            const ripple = document.createElement('span');
+            ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.03);
+                        pointer-events: none;
+                        width: 100px;
+                        height: 100px;
+                        transform: translate(-50%, -50%) scale(0);
+                        animation: rippleEffect 1.2s ease-out forwards;
+                        left: ${e.clientX - this.getBoundingClientRect().left}px;
+                        top: ${e.clientY - this.getBoundingClientRect().top}px;
+                    `;
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1200);
+        });
+
+        // 注入波纹动画
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+                    @keyframes rippleEffect {
+                        to { transform: translate(-50%, -50%) scale(10); opacity: 0; }
+                    }
+                `;
+        document.head.appendChild(rippleStyle);
+    </script>
 </body>
 </html>
